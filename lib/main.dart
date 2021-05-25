@@ -1,6 +1,8 @@
-import 'package:catinder/widgets/visu_profil_widget.dart';
+import 'package:catinder/pages/login/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import 'pages/visu_profil/visu_profil_widget.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
               home: snapshot.hasError
                   ? Text("Error")
                   : snapshot.connectionState == ConnectionState.done
-                      ? VisuProfilWidget()
+                      ? LoginWidget()
                       : Text("Loading"));
         });
   }
