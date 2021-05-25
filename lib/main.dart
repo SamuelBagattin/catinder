@@ -2,8 +2,6 @@ import 'package:catinder/pages/login/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'pages/visu_profil/visu_profil_widget.dart';
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
