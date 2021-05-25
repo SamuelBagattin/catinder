@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.catinder">
+    package="com.catinder">
    <application
         android:label="catinder"
         android:icon="@mipmap/ic_launcher">

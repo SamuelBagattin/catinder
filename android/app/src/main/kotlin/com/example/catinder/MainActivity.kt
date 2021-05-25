@@ -1,4 +1,4 @@
-package com.example.catinder
+package com.catinder
 
 import io.flutter.embedding.android.FlutterActivity
 
