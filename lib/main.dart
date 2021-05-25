@@ -14,17 +14,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _initialization,
-      builder: (context, snapshot) {
-
-        return MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: snapshot.hasError ? Text("Error") : snapshot.connectionState == ConnectionState.done ? VisuProfilWidget() : Text("Loading")
-        );
-      }
-    );
+        future: _initialization,
+        builder: (context, snapshot) {
+          return MaterialApp(
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+              ),
+              home: snapshot.hasError
+                  ? Text("Error")
+                  : snapshot.connectionState == ConnectionState.done
+                      ? VisuProfilWidget()
+                      : Text("Loading"));
+        });
   }
 }

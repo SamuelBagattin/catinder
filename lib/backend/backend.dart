@@ -33,6 +33,7 @@ class CatProfilesRecord {
 
 Stream<List<CatProfilesRecord>> queryCatProfilesRecord() {
   return FirebaseFirestore.instance.collection('cat_profiles').snapshots().map(
-      (event) =>
-          event.docs.map((e) => CatProfilesRecord.fromMap(e.id, e.data())).toList());
+      (event) => event.docs
+          .map((e) => CatProfilesRecord.fromMap(e.id, e.data()))
+          .toList());
 }

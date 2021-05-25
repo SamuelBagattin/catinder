@@ -86,7 +86,7 @@ class _VisuProfilWidgetState extends State<VisuProfilWidget> {
                   if (!snapshot.hasData) {
                     return Center(child: CircularProgressIndicator());
                   }
-                  if(snapshot.hasError){
+                  if (snapshot.hasError) {
                     return Text(jsonEncode(snapshot.error));
                   }
                   List<CatProfilesRecord> stackCatProfilesRecordList =
