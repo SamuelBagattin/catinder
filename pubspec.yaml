@@ -1,8 +1,12 @@
 name: catinder
 description: A new Flutter project.
 
+
+
 environment:
   sdk: ">=2.7.0 <3.0.0"
+
+
 
 dependencies:
   flutter:
@@ -14,23 +18,30 @@ dependencies:
   cloud_firestore: ^0.16.0
   firebase_auth: ^0.20.0+1
   firebase_core: ^0.7.0
+  firebase_storage: ^7.0.0
   font_awesome_flutter:
   google_fonts:
   google_sign_in: ^4.0.16
+  image_picker: ^0.6.7+22
+  mime_type: ^1.0.0
   rxdart: ^0.25.0
   sign_in_with_apple: ^2.5.4
   url_launcher:
+  uuid: ^2.2.2
+
+
 
 
 dev_dependencies:
   build_runner: ^1.11.0
   built_value_generator: ^8.0.0-nullsafety.0
 
+
+
   flutter_test:
     sdk: flutter
 
+
+
 flutter:
   uses-material-design: true
-#  assets:
-#    - assets/images/
-#    - assets/videos/

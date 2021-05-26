@@ -17,16 +17,21 @@ class FFButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: this.onPressed,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          icon,
-          Text(
-            this.text,
-            style: options.textStyle,
-          ),
-        ],
-      ),
+      child: icon != null
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                icon,
+                Text(
+                  this.text,
+                  style: options.textStyle,
+                ),
+              ],
+            )
+          : Text(
+              this.text,
+              style: options.textStyle,
+            ),
       key: this.key,
       color: options.color,
       elevation: options.elevation.toDouble(),

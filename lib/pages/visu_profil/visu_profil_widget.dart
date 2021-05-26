@@ -1,6 +1,13 @@
-import '../../backend/backend.dart';
+import 'package:catinder/backend/backend.dart';
+import 'package:catinder/utils/list.dart';
+import 'package:catinder/widgets/navbutton.dart';
+
+import '../edit_profil/edit_profil_widget.dart';
+import '../messagerie/messagerie_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class VisuProfilWidget extends StatefulWidget {
   VisuProfilWidget({Key key}) : super(key: key);
@@ -20,58 +27,7 @@ class _VisuProfilWidgetState extends State<VisuProfilWidget> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            width: double.infinity,
-            height: 100,
-            decoration: BoxDecoration(
-              color: Color(0xFFEEEEEE),
-            ),
-            child: Align(
-              alignment: Alignment(0, 0.5),
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        print('IconButton pressed ...');
-                      },
-                      icon: FaIcon(
-                        FontAwesomeIcons.cat,
-                        color: Colors.black,
-                        size: 30,
-                      ),
-                      iconSize: 30,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        print('IconButton pressed ...');
-                      },
-                      icon: Icon(
-                        Icons.chat,
-                        color: Colors.black,
-                        size: 30,
-                      ),
-                      iconSize: 30,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        print('IconButton pressed ...');
-                      },
-                      icon: Icon(
-                        Icons.person,
-                        color: Colors.black,
-                        size: 30,
-                      ),
-                      iconSize: 30,
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
+          NavButtonsBar(),
           Expanded(
             child: Container(
               width: double.infinity,
@@ -87,7 +43,7 @@ class _VisuProfilWidgetState extends State<VisuProfilWidget> {
                     return Center(child: CircularProgressIndicator());
                   }
                   List<CatProfilesRecord> stackProfilesCatProfilesRecordList =
-                      snapshot.data;
+                      shuffle(snapshot.data);
                   // Customize what your widget looks like with no query results.
                   if (snapshot.data.isEmpty) {
                     // return Container();
@@ -95,112 +51,115 @@ class _VisuProfilWidgetState extends State<VisuProfilWidget> {
                     stackProfilesCatProfilesRecordList =
                         createDummyCatProfilesRecord(count: 4);
                   }
-                  return Stack(
-                    children:
-                        List.generate(stackProfilesCatProfilesRecordList.length,
-                            (stackProfilesIndex) {
-                      final stackProfilesCatProfilesRecord =
-                          stackProfilesCatProfilesRecordList[
-                              stackProfilesIndex];
-                      return Card(
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        color: Color(0xFFF5F5F5),
-                        elevation: 3,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment(0, 0),
-                              child: Image.network(
-                                'https://picsum.photos/seed/104/600',
-                                width: double.infinity,
-                                height: double.infinity,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment(0, 0),
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(8, 0, 0, 16),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                            child: Text(
-                                              stackProfilesCatProfilesRecord
-                                                  .name,
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                color: Colors.white,
-                                                fontSize: 30,
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                            child: Text(
-                                              stackProfilesCatProfilesRecord.age
-                                                  .toString(),
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                color: Colors.white,
-                                                fontSize: 30,
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            stackProfilesCatProfilesRecord
-                                                .breed,
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                              fontSize: 30,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(8, 0, 0, 16),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Text(
-                                            stackProfilesCatProfilesRecord
-                                                .description,
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(
+                      children:
+                          List.generate(stackProfilesCatProfilesRecordList.length,
+                              (stackProfilesIndex) {
+                        final stackProfilesCatProfilesRecord =
+                            stackProfilesCatProfilesRecordList[
+                                stackProfilesIndex];
+                        return Card(
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          color: Color(0xFFF5F5F5),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment(0, 0),
+                                child: Image.network(
+                                  stackProfilesCatProfilesRecord.picture,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                      );
-                    }),
+                              Align(
+                                alignment: Alignment(0, 0),
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(8, 0, 0, 16),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                              child: Text(
+                                                stackProfilesCatProfilesRecord
+                                                    .name,
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                  fontFamily: 'Poppins',
+                                                  color: Colors.white,
+                                                  fontSize: 30,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                              child: Text(
+                                                stackProfilesCatProfilesRecord.age
+                                                    .toString(),
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                  fontFamily: 'Poppins',
+                                                  color: Colors.white,
+                                                  fontSize: 30,
+                                                ),
+                                              ),
+                                            ),
+                                            Text(
+                                              stackProfilesCatProfilesRecord
+                                                  .breed,
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                fontFamily: 'Poppins',
+                                                color: Colors.white,
+                                                fontSize: 30,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(8, 0, 0, 16),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Text(
+                                              stackProfilesCatProfilesRecord
+                                                  .description,
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                fontFamily: 'Poppins',
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      }),
+                    ),
                   );
                 },
               ),
@@ -228,8 +187,14 @@ class _VisuProfilWidgetState extends State<VisuProfilWidget> {
                   iconSize: 30,
                 ),
                 IconButton(
-                  onPressed: () {
-                    print('IconButton pressed ...');
+                  onPressed: () async {
+                    final catProfilesRecordData = {
+                      'votes': FieldValue.arrayUnion(['test']),
+                    };
+
+                    // await CatProfilesRecord.collection
+                    //     .doc()
+                    //     .collection(collectionPath);
                   },
                   icon: Icon(
                     Icons.check_outlined,

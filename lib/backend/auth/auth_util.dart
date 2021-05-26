@@ -2,8 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+FirebaseAuth auth = FirebaseAuth.instance;
+
 Future<User> signInWithGoogle(BuildContext context) async {
-  FirebaseAuth auth = FirebaseAuth.instance;
   User user;
 
   final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -36,4 +37,8 @@ Future<User> signInWithGoogle(BuildContext context) async {
   }
 
   return user;
+}
+
+User getCurrentUser() {
+  return auth.currentUser;
 }
