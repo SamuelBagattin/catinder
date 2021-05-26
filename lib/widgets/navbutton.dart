@@ -32,7 +32,6 @@ class NavButtonsBar extends StatelessWidget {
   }
 }
 
-
 class NavButton extends StatelessWidget {
   final Pages page;
 
@@ -59,29 +58,29 @@ class NavButton extends StatelessWidget {
               }
             },
           ),
-              (r) => false,
+          (r) => false,
         );
       },
-      child: this.page == Pages.Chat ? Icon(
-        Icons.chat,
-        color: Colors.amber,
-        size: 30,
-      ) : this.page == Pages.Main ? FaIcon(
-        FontAwesomeIcons.cat,
-        color: Colors.lightBlue,
-        size: 30,
-      ) : Icon(
-        Icons.person,
-        color: Colors.pink,
-        size: 30,
-      ),
+      child: this.page == Pages.Chat
+          ? Icon(
+              Icons.chat,
+              color: Colors.amber,
+              size: 30,
+            )
+          : this.page == Pages.Main
+              ? FaIcon(
+                  FontAwesomeIcons.cat,
+                  color: Colors.lightBlue,
+                  size: 30,
+                )
+              : Icon(
+                  Icons.person,
+                  color: Colors.pink,
+                  size: 30,
+                ),
       color: Colors.white,
     );
   }
 }
 
-enum Pages {
-  Chat,
-  Main,
-  EditProfile
-}
+enum Pages { Chat, Main, EditProfile }

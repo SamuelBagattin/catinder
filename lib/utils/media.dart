@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime_type/mime_type.dart';
 
@@ -17,21 +16,23 @@ bool validateFileFormat(String path, BuildContext context) {
   return true;
 }
 
-void showUploadMessage(BuildContext context, String s, {bool showLoading, int durationSeconds}) {
+void showUploadMessage(BuildContext context, String s,
+    {bool showLoading, int durationSeconds}) {
   final snackBar = SnackBar(
-    content: Row(
-      children: [
-        CircularProgressIndicator(),
-        Text(s),
-      ],
-    ),
+    content: showLoading
+        ? Row(
+            children: [
+              CircularProgressIndicator(),
+              Text(s),
+            ],
+          )
+        : Text(s),
     duration: Duration(seconds: durationSeconds != null ? durationSeconds : 3),
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
 UploadTask uploadData({String storagePath, String filename}) {
-  Reference firebaseStorageRef =
-      FirebaseStorage.instance.ref().child(filename);
+  Reference firebaseStorageRef = FirebaseStorage.instance.ref().child(filename);
   return firebaseStorageRef.putFile(File(storagePath));
 }

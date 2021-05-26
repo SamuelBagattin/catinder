@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:catinder/backend/auth/auth_util.dart';
 import 'package:catinder/backend/backend.dart';
 import 'package:catinder/utils/media.dart';
@@ -85,16 +86,16 @@ class _EditProfilWidgetState extends State<EditProfilWidget> {
                         print(downloadUrl);
                         if (downloadUrl != null) {
                           setState(() => uploadedFileUrl = downloadUrl);
-                          showUploadMessage(context, 'Success!');
+                          showUploadMessage(context, 'Success !');
                         } else {
                           showUploadMessage(context, 'Failed to upload media');
                         }
                       });
                     }
                   },
-                  child: Image.network(
-                    this.uploadedFileUrl == null
-                        ? 'https://picsum.photos/seed/682/600'
+                  child: CachedNetworkImage(
+                    imageUrl: this.uploadedFileUrl == null
+                        ? 'https://i.stack.imgur.com/l60Hf.png'
                         : this.uploadedFileUrl,
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height * 0.45,
@@ -376,6 +377,13 @@ class _EditProfilWidgetState extends State<EditProfilWidget> {
                     description: this.descriptionController.value.text,
                     age: int.parse(this.ageController.value.text),
                     breed: this.breedController.value.text));
+                await Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => VisuProfilWidget(),
+                  ),
+                  (r) => false,
+                );
               },
               text: 'Submit',
               options: FFButtonOptions(

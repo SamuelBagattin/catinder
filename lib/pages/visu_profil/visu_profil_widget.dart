@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:catinder/backend/backend.dart';
 import 'package:catinder/utils/list.dart';
 import 'package:catinder/widgets/navbutton.dart';
@@ -54,9 +55,9 @@ class _VisuProfilWidgetState extends State<VisuProfilWidget> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Stack(
-                      children:
-                          List.generate(stackProfilesCatProfilesRecordList.length,
-                              (stackProfilesIndex) {
+                      children: List.generate(
+                          stackProfilesCatProfilesRecordList.length,
+                          (stackProfilesIndex) {
                         final stackProfilesCatProfilesRecord =
                             stackProfilesCatProfilesRecordList[
                                 stackProfilesIndex];
@@ -71,11 +72,21 @@ class _VisuProfilWidgetState extends State<VisuProfilWidget> {
                             children: [
                               Align(
                                 alignment: Alignment(0, 0),
-                                child: Image.network(
-                                  stackProfilesCatProfilesRecord.picture,
-                                  width: double.infinity,
-                                  height: double.infinity,
+                                child: CachedNetworkImage(
                                   fit: BoxFit.cover,
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  imageUrl: stackProfilesCatProfilesRecord
+                                              .picture !=
+                                          null
+                                      ? stackProfilesCatProfilesRecord.picture
+                                      : "https://i.stack.imgur.com/l60Hf.png",
+                                  progressIndicatorBuilder:
+                                      (context, url, downloadProgress) =>
+                                          CircularProgressIndicator(
+                                              value: downloadProgress.progress),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
                                 ),
                               ),
                               Align(
@@ -88,13 +99,14 @@ class _VisuProfilWidgetState extends State<VisuProfilWidget> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(8, 0, 0, 16),
+                                        padding:
+                                            EdgeInsets.fromLTRB(8, 0, 0, 16),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding:
-                                                  EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                              padding: EdgeInsets.fromLTRB(
+                                                  0, 0, 8, 0),
                                               child: Text(
                                                 stackProfilesCatProfilesRecord
                                                     .name,
@@ -106,12 +118,23 @@ class _VisuProfilWidgetState extends State<VisuProfilWidget> {
                                                 ),
                                               ),
                                             ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(8, 0, 0, 16),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
                                             Padding(
-                                              padding:
-                                                  EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                              padding: EdgeInsets.fromLTRB(
+                                                  0, 0, 8, 0),
                                               child: Text(
-                                                stackProfilesCatProfilesRecord.age
-                                                    .toString(),
+                                                stackProfilesCatProfilesRecord
+                                                        .age
+                                                        .toString() +
+                                                    " ans, ",
                                                 textAlign: TextAlign.start,
                                                 style: TextStyle(
                                                   fontFamily: 'Poppins',
@@ -129,12 +152,13 @@ class _VisuProfilWidgetState extends State<VisuProfilWidget> {
                                                 color: Colors.white,
                                                 fontSize: 30,
                                               ),
-                                            )
+                                            ),
                                           ],
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(8, 0, 0, 16),
+                                        padding:
+                                            EdgeInsets.fromLTRB(8, 0, 0, 16),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
